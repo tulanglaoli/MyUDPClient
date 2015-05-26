@@ -12,7 +12,7 @@ namespace Test
         public string GetDiskVolumeSerialNumber()
         {
             ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
-            ManagementObject disk = new ManagementObject("win32_logicaldisk.deviceid=\"d:\"");
+            ManagementObject disk = new ManagementObject("win32_logicaldisk.deviceid=\"C:\"");
 
             ;
             disk.Get();
@@ -38,6 +38,7 @@ namespace Test
             string strMNum = strNum.Substring(0, 24);//从生成的字符串中取出前24个字符做为机器码
             return strMNum;
         }
+       
         public int[] intCode = new int[127];//存储密钥
         public int[] intNumber = new int[25];//存机器码的Ascii值
         public char[] Charcode = new char[25];//存储机器码字
@@ -51,11 +52,11 @@ namespace Test
         //生成注册码
         public string getRNum()
         {
+            string ss = this.getMNum();
             setIntCode();//初始化127位数组
-            for (int i = 1; i < Charcode.Length; i++)//把机器码存入数组中
-            {
-                Charcode[i] = Convert.ToChar(this.getMNum().Substring(i - 1, 1));
-            }
+            
+                Charcode = ss.PadRight(25,'A').ToCharArray();
+            
             for (int j = 1; j < intNumber.Length; j++)//把字符的ASCII值存入一个整数组中。
             {
                 intNumber[j] = intCode[Convert.ToInt32(Charcode[j])] + Convert.ToInt32(Charcode[j]);
@@ -89,6 +90,7 @@ namespace Test
             }
             return strAsciiName;//返回注册码
         }
+
        
 
     }
