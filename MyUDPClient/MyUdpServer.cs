@@ -8,17 +8,18 @@ using System.Threading;
 namespace AsyncServer
 {
     // 定义 UdpState类
-     class UdpState
-    {
-        public UdpClient udpClient;
-        public IPEndPoint ipEndPoint;
-        public const int BufferSize = 1024;
-        public byte[] buffer = new byte[BufferSize];
-        public int counter = 0;
-    }
+    
     // 异步UDP类
     public class AsyncUdpSever
     {
+        class UdpState
+        {
+            public UdpClient udpClient;
+            public IPEndPoint ipEndPoint;
+            public const int BufferSize = 1024;
+            public byte[] buffer = new byte[BufferSize];
+            public int counter = 0;
+        }
         // 定义节点
         public static AsyncUdpSever aus;
         private IPEndPoint ipEndPoint = null;

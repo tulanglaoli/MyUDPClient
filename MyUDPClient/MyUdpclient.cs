@@ -4,21 +4,23 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+
 namespace AsyncClient
 {
     // 定义 UdpState类
-     class UdpState
-    {
-        public UdpClient udpClient = null;
-        public IPEndPoint ipEndPoint = null;
-        public const int BufferSize = 1024;
-        public byte[] buffer = new byte[BufferSize];
-        public int counter = 0;
-        public string laststring;
-    }
+     
     // 异步UDP类
     public class AsyncUdpClient
     {
+        class UdpState
+        {
+            public UdpClient udpClient = null;
+            public IPEndPoint ipEndPoint = null;
+            public const int BufferSize = 1024;
+            public byte[] buffer = new byte[BufferSize];
+            public int counter = 0;
+            public string laststring;
+        }
         public static AsyncUdpClient auc;
         public static bool messageSent = false;
         // Receive a message and write it to the console.
@@ -42,7 +44,8 @@ namespace AsyncClient
         // 定义套接字
         //private Socket receiveSocket;
         //private Socket sendSocket;
-
+        
+        
         public AsyncUdpClient()
         {
             // 本机节点
@@ -94,7 +97,12 @@ namespace AsyncClient
             //sendSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             //sendSocket.Bind(remoteEP);
         }
-        // 发送函数
+        
+        
+
+        /// <summary>
+        /// 发送等待回执
+        /// </summary>
         public void SendMsg()
         {
             udpSend.Connect(remoteEP);
@@ -117,7 +125,12 @@ namespace AsyncClient
                 }
             }
         }
+        
 
+        /// <summary>
+        /// 发送是否等待回执
+        /// </summary>
+        /// <param name="IsWait"></param>
         public void SendMsg(bool IsWait)
         {
             udpSend.Connect(remoteEP);
@@ -141,6 +154,10 @@ namespace AsyncClient
             }
         }
 
+        /// <summary>
+        /// 发送指定信息
+        /// </summary>
+        /// <param name="msg"></param>
         public void SendMsg(string msg)
         {
             sendmessage = msg;
@@ -211,7 +228,11 @@ namespace AsyncClient
             }
         }
 
-        
+        /// <summary>
+        /// 暂时没有用
+        /// </summary>
+        /// <param name="IsWait"></param>
+        /// <param name="sendstring"></param>
         public void ReceiveMessages(bool IsWait, string sendstring)
         {
             lock (this)
